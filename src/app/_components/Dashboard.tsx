@@ -17,7 +17,10 @@ import Link from '@mui/material/Link';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
+import { usePathname } from 'next/navigation'
 import { MenuListItems } from './MenuListItems';
+import { useSerialPorts } from "@/features/web-serial/webSerialDataProvider"
+
 
 function Copyright(props: any) {
   return (
@@ -90,7 +93,23 @@ export default function Dashboard({ children }: { children: React.ReactNode }) {
   const toggleDrawer = () => {
     setOpen(!open);
   };
-
+  const pathName = usePathname()
+  const serialPorts = useSerialPorts()
+  const makeTitle = React.useCallback(()=> {
+    if (pathName === "/") {
+      return "Port List"
+    } else if (/^\/\d+$/.test(pathName)) {
+      const id:number = parseInt(pathName.replace("/",""), 10)
+      const dispLen = 12
+      if (serialPorts[id] !== undefined ){
+        return serialPorts[id].idStr + " : " + (serialPorts[id].venderName.slice(0,dispLen)) + ((dispLen < serialPorts[id].venderName.length)?"...":"")
+      } else {
+        return "Unknown device"
+      }
+    } else {
+      return "Unknown path"
+    }
+  },[pathName, serialPorts])
   return (
     <ThemeProvider theme={defaultTheme}>
       <Box sx={{ display: 'flex' }}>
@@ -120,7 +139,7 @@ export default function Dashboard({ children }: { children: React.ReactNode }) {
               noWrap
               sx={{ flexGrow: 1 }}
             >
-              Dashboard
+              {makeTitle()}
             </Typography>
             <IconButton color="inherit">
               <Badge badgeContent={4} color="secondary">

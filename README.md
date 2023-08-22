@@ -36,8 +36,45 @@
 ```
 
 ## dynamic routeing対応
-- '
-------
+- dynamic routingとssgは相性悪そう。
+- うまく動いていない。
+- vercelだとサーバー側も動いてくれるので、vercelへのデプロイで動作確認できる。
+
+## 課題
+- portlist
+  - useSerialPorts()だと、portの増減時にしか更新されない。
+  - いずれかのポート状態が変化した、を通知するか、ページ更新時にfetchするか。
+    - ページ更新時にfetchするのが筋がよさそう。
+- dataview
+  - 受信時、totalLinesはちゃんと反応している。
+  - DELETE disable時、アイコンが薄くならない。
+  - データ取得/表示はfetchしないとできない。
+    - 1行毎に更新イベントが飛んできてるっぽい
+      - 最初の更新から100ms後等、遅延fetchさせたほうがいいか?
+  - 「dataviewページ表示中にケーブル抜かれたらportlistに遷移」が未実装
+  - 送信フォーム未実装
+  - 受信データのスクロールは実装し始めると奥が深そう
+- menulist
+  - 文字がリンク色になってるのがいけてない。cssの当て方がわからん。
+- menuバー
+  - タイトル文字列が固定なのがいけてない。
+    - urlと、port情報から、idStrとvenderName出したい
+  - 右側のベル+バッジは活用したい。
+    - ユーザー通知情報としては下記が候補
+      - 有効ポートの増減
+      - ポートオープン失敗
+
+## 作業優先順位
+1. React-Queryの導入
+   - portlist表示時の情報取得
+     - dataviewでポート状態変えてlistに戻ったら、ちゃんと反映してること。
+   - 受信データ取得、表示(Simple版)
+1. タイトル文字列URLから取ってくる(済)
+1. dataviewページ表示中にケーブル抜かれたらportlistに遷移
+1. 送信フォーム(Simple版)
+1. スクロール
+1. ユーザー通知
+
 
 # Material UI - Next.js App Router example in TypeScript
 
