@@ -1,4 +1,14 @@
 # web-serial-gui
+## 概要
+- 2023/08/23
+- [katonobu/cna-react-admin](https://github.com/katonobu/cna-react-admin)からの派生
+- react-adminはNext.jsのApp-routerのディレクトリ構成だがroutingは独自っぽそう。
+- App-routerのディレクトリ構成、画面構築の枠組みで作り直した版。
+- CreateNextAppにMUIのDashboard-exampleを被せたものを起点としている。
+- App-routerでは[id]によるdynamic-routingを使うと、サーバー必須になるっぽい。
+  - 現状Vercelでdeployしている。
+- ライブラリ整備に注力するため、[katonobu/web-serial-gui](https://github.com/katonobu/web-serial-gui)のexampleに移行するかも。
+
 ## 最初
 1.  [MUI examples/material-next-app-router-ts](https://github.com/mui/material-ui/tree/master/examples/material-next-app-router-ts)以下をコピー。
 1. `npm install`,`npm run dev`で動作確認。
